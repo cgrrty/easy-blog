@@ -11,7 +11,11 @@
     * 4.使用设备的mac地址（例如：enx78e7d1ea46da），该方案仅当用户主动选择时才被使用，默认不采用
     * 5.如果1，2，3全部不行的话，使用传统的不可预测的内核命名方案（例如：eth0）
     如果用户使用biosdevname=1的设置开启了，biosdevname将被使用。如果用户配置了udev规则，那么优先使用udev规则。  
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 08f9ddb6898fbac15cf00b616dd53d727b92ca4e
 * 这里，虚拟机通过桥接模拟出来的虚拟网卡是可以得到板载设备的序列号的，en代表ethernet，o代表onboard，它的序列号是16777736。然而为什么时这个数字呢？  
 如果这个虚拟网卡的信息时vmware写入的，那么根据规则，这个信息有可能写在bios里，进到虚拟机的bios中查看了一番，没有什么有用的信息。
 当然会有一些有探究精神的人探究过这个问题，这里有[一篇文章](http://serverfix.net/why-is-my-eth0-called-eno16777736/)讲的非常详细。
@@ -28,11 +32,17 @@ Description:
         The attribute will be created only if the firmware has given an instance number to the PCI device. ACPI _DSM instance number will be given priority if the system firmware provides SMBIOS type 41 device type instance also.
 </code>  
 甚至我们可以查到该acpi_index对应的pci槽位号。
+
 * 好吧，我还是想按自己的习惯来，把eno16777736改成eth0吧。
   具体方法就是按照之前的方案，关闭biosdevname，使用udev规则即可。
   [参见](http://blog.sina.com.cn/s/blog_926acdf80102vsc1.html)
+
 * 这样，网卡名称就修改完了。考虑到要与局域网内的另外一台主机进行通信，所以虚拟机中的网络模式采用的是桥接，那么下一步就是给rhel7设置一个固定ip。
+
 * 在/etc/sysconfig/network-scripts/ifcfg-eth0中修改IPADDR，NETMASK,GATEWAY，并把BOOTPROTO设为static，将ONBOOT设为yes。service network restart，重启network服务，ping 233.5.5.5通了。
+
 * 这时候可以再设置一下dns，修改/etc/resolv.conf文件，将nameserver设为233.5.5.5（阿里dns）。ping www.baidu.com 。ok
+
 * 到这里如果从mac上能ping通虚拟机，但是ssh无法连上的话，考虑关闭防火墙服务，service iptables stop. 
+
 * ok，成功为vmware中的rhel7做好a网络配置了。
