@@ -6,7 +6,7 @@
 
 因为react-mdl是使用es6+的react编写方式，使用的是es6的模块依赖实现，而我现在的项目是使用的是browerify进行的模块化，构建代码是不兼容的。
 
-这个问题gulp中也有babel可以解决，它可以先将最新es6的模块依赖方式编译成browerfify支持的模块依赖方式，使用的是babelify。当然babel本身很强大，babelify的实现也是使用了babel-core的node api。使用的时候针对react (ES7+ Property Initializers)[https://facebook.github.io/react/blog/2015/01/27/react-v0.13.0-beta-1.html]的语法，需要配置babelify的属性。
+这个问题gulp中也有babel可以解决，它可以先将最新es6的模块依赖方式编译成browerfify支持的模块依赖方式，使用的是babelify。当然babel本身很强大，babelify的实现也是使用了babel-core的node api。使用的时候针对react [ES7+ Property Initializers](https://facebook.github.io/react/blog/2015/01/27/react-v0.13.0-beta-1.html)的语法，需要配置babelify的属性。
 
 具体的gulp模块化的任务如下：
 
