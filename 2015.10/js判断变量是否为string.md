@@ -17,4 +17,12 @@ function不一样，因为function没有字面量
     console.log(f instanceof Function);//true
     console.log(f2 instanceof Function);//true
 
+---
 
+另附方法2：
+    
+    function classOf(value) {
+        return Object.prototype.toString.call(value);
+    }   
+    console.log(classOf(new String("")));//[object String]
+    console.loeg(classOf(" "));//[object String]
